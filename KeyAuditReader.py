@@ -19,19 +19,9 @@ def building_check(ltr):
 
 # Load full key audit.
 auditBook = xl.load_workbook(filename = "VDSKeyAudit.xlsx")
-auditSheetB = auditBook['B']
-auditSheetC = auditBook['C']
-auditSheetD = auditBook['D']
-auditSheetE = auditBook['E']
-auditSheetF = auditBook['F']
-auditSheetG = auditBook['G']
-auditSheetH = auditBook['H']
-auditSheetI = auditBook['I']
-auditSheetJ = auditBook['J']
-auditSheetK = auditBook['K']
 
 # Load sorted keycodes (1-1866).
-# Rooms are stored in column A, keycodes are stored in column B.
+# Keycodes are stored in column A, rooms are stored in column B.
 sortedBook = xl.load_workbook(filename = "SortedDecoded.xlsx")
 sortedSheet = sortedBook["Vista"]
 
@@ -41,7 +31,7 @@ columns = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I']
 # Reading audit back to user.
 for currentKey in range(1, 1867):
     # Decode building from currentKey.
-    currentRoom = sortedSheet["A" + str(currentKey + 1)].value
+    currentRoom = sortedSheet["B" + str(currentKey + 1)].value
     currentLetter = currentRoom[3]
     roomAmount = building_check(currentLetter)
     auditSheet = auditBook[currentLetter]
