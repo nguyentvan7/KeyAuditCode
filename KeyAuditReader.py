@@ -50,36 +50,33 @@ for currentKey in range(1, 1867):
         for column in columns:
             if currentRoom[5:] == auditSheet["A" + str(row)].value:
                 print(auditSheet[column + "1"].value + ": " + str(auditSheet[column + str(row)].value))
-                selectedRow = row
-    verify = input("Do any changes need to be made?\n")
-    # Changes need to be made.
-    if verify != "":
-        choice = input("What field needs to be changed?\n")
-        while choice != "done":
-            # Changing sparky key amount.
-            if choice == "s":
-                auditSheet["D" + str(selectedRow)].value = input("How many sparky keys?\n")
-            # Changing room key amount.
-            elif choice == "r":
-                auditSheet["E" + str(selectedRow)].value = input("How many room keys?\n")
-            # Changing mail key amount.
-            elif choice == "m":
-                auditSheet["F" + str(selectedRow)].value = input("How many mail keys?\n")
-            # Changing fob amount.
-            elif choice == "f":
-                auditSheet["G" + str(selectedRow)].value = input("How many fobs?\n")
-            # Changing clear/discrepant.
-            elif choice == "c":
-                change = input("Clear or discrepant?\n")
-                if change == "c":
-                    auditSheet["H" + str(selectedRow)].value = "Clear"
-                else:
-                    auditSheet["H" + str(selectedRow)].value = "Discrepant"
-            # Changing comments.
-            else:
-                auditSheet["I" + str(selectedRow)].value = input("Input comment:\n")
+        verify = input("Do any changes need to be made?\n")
+        # Changes need to be made.
+        if verify != "":
             choice = input("What field needs to be changed?\n")
-        auditBook.save("VDSKeyAudit.xlsx")
-        break
+            while choice != "done":
+                # Changing sparky key amount.
+                if choice == "s":
+                    auditSheet["D" + str(row)].value = int(input("How many sparky keys?\n"))
+                # Changing room key amount.
+                elif choice == "r":
+                    auditSheet["E" + str(row)].value = int(input("How many room keys?\n"))
+                # Changing mail key amount.
+                elif choice == "m":
+                    auditSheet["F" + str(row)].value = int(input("How many mail keys?\n"))
+                # Changing fob amount.
+                elif choice == "f":
+                    auditSheet["G" + str(row)].value = int(input("How many fobs?\n"))
+                # Changing clear/discrepant.
+                elif choice == "c":
+                    change = input("Clear or discrepant?\n")
+                    if change == "c":
+                        auditSheet["H" + str(row)].value = "Clear"
+                    else:
+                        auditSheet["H" + str(row)].value = "Discrepant"
+                # Changing comments.
+                else:
+                    auditSheet["I" + str(row)].value = input("Input comment:\n")
+                choice = input("What field needs to be changed?\n")
     print()
-#auditBook.save("VDSKeyAudit.xlsx")
+auditBook.save("VDSKeyAudit.xlsx")
