@@ -77,7 +77,7 @@ for currentKey in range(1, 1867):
 auditBook.save("VDSKeyAudit.xlsx")
 
 #Reading Villas audit back to user.
-auditBook = xl.load_workbook(filename = "VAVKeyAudit.xlsx")
+auditBook = xl.load_workbook(filename = "VAVLKeyAudit.xlsx")
 sortedSheet = sortedBook["Villas"]
 for currentKey in range(1, 401):
     print("Keycode: " + str(currentKey))
@@ -114,4 +114,4 @@ for currentKey in range(1, 401):
                 auditSheet["I" + str(currentKey + 1)].value = input("Input comment:\n")
             choice = input("What field needs to be changed?\n")
     print()
-auditBook.save("VAVKeyAudit.xlsx")
+auditBook.save("VAVLKeyAudit.xlsx")
