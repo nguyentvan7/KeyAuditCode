@@ -35,13 +35,13 @@ for currentKey in range(1, 1867):
     currentLetter = currentRoom[3]
     roomAmount = building_check(currentLetter)
     auditSheet = auditBook[currentLetter]
-    print("Keycode: " + str(currentKey))
     # Iterate through all entries in corresponding building to search for correct room for curentKey.
-    for row in range(2, roomAmount):
+    for row in range(2, roomAmount + 2):
         # Check for match.
         if currentRoom[5:] == auditSheet["A" + str(row)].value:
             selectedRow = row
             # Print all information needed.
+            print("Keycode: " + str(currentKey))
             for column in columns:
                 print(auditSheet[column + "1"].value + ": " + str(auditSheet[column + str(row)].value))
             break
@@ -52,7 +52,13 @@ for currentKey in range(1, 1867):
         while choice != "done":
             # Changing sparky key amount.
             if choice == "s":
-                auditSheet["D" + str(selectedRow)].value = int(input("How many sparky keys?\n"))
+                while True:
+                    try:
+                        change = int(input("How many sparky keys?\n"))
+                        break
+                    except ValueError:
+                        print("Not an integer.")
+                auditSheet["D" + str(selectedRow)].value = change
             # Changing room key amount.
             elif choice == "r":
                 auditSheet["E" + str(selectedRow)].value = int(input("How many room keys?\n"))
@@ -78,6 +84,7 @@ auditBook.save("VDSKeyAudit.xlsx")
 
 #Reading Villas audit back to user.
 auditBook = xl.load_workbook(filename = "VAVLKeyAudit.xlsx")
+auditSheet = auditBook["L"]
 sortedSheet = sortedBook["Villas"]
 for currentKey in range(1, 401):
     print("Keycode: " + str(currentKey))
