@@ -17,6 +17,61 @@ def building_check(ltr):
     else:
         return 149
 
+def choice_check(chc, sRow):
+    # Changing sparky key amount.
+    if chc == "s":
+        while True:
+            try:
+                change = int(input("How many sparky keys?\n"))
+                break
+            except ValueError:
+                print("Not an integer.")
+        auditSheet["D" + str(sRow)].value = change
+    # Changing room key amount.
+    elif chc == "r":
+        while True:
+            try:
+                change = int(input("How many room keys?\n"))
+                break
+            except ValueError:
+                print("Not an integer.")
+        auditSheet["E" + str(sRow)].value = change
+    # Changing mail key amount.
+    elif chc == "m":
+        while True:
+            try:
+                change = int(input("How many mail keys?\n"))
+                break
+            except ValueError:
+                print("Not an integer.")
+        auditSheet["F" + str(sRow)].value = change
+    # Changing fob amount.
+    elif chc == "f":
+        while True:
+            try:
+                change = int(input("How many fobs?\n"))
+                break
+            except ValueError:
+                print("Not an integer.")
+        auditSheet["G" + str(sRow)].value = change
+    # Changing clear/discrepant.
+    elif chc == "c":
+        change = input("Clear or discrepant?\n")
+        if change == "c":
+            auditSheet["H" + str(sRow)].value = "Clear"
+        else:
+            auditSheet["H" + str(sRow)].value = "Discrepant"
+    # Returning full set of keys.
+    elif chc == "set":
+        auditSheet["E" + str(sRow)].value = 1
+        auditSheet["F" + str(sRow)].value = 1
+        auditSheet["G" + str(sRow)].value = 1
+        auditSheet["H" + str(sRow)].value = "Clear"
+        auditSheet["I" + str(sRow)].value = ""
+    # Changing comments.
+    else:
+        auditSheet["I" + str(sRow)].value = input("Input comment:\n")
+
 # Load Vista key audit.
 auditBook = xl.load_workbook(filename = "VDSKeyAudit.xlsx")
 
@@ -43,59 +98,14 @@ for currentKey in range(1, 1867):
             # Print all information needed.
             print("Keycode: " + str(currentKey))
             for column in columns:
-                print(auditSheet[column + "1"].value + ": " + str(auditSheet[column + str(row)].value))
+                print(auditSheet[column + "1"].value + ": " + str(auditSheet[column + str(selectedRow)].value))
             break
     verify = input("Do any changes need to be made?\n")
     # Changes need to be made.
     if verify != "":
         choice = input("What field needs to be changed?\n")
         while choice != "done":
-            # Changing sparky key amount.
-            if choice == "s":
-                while True:
-                    try:
-                        change = int(input("How many sparky keys?\n"))
-                        break
-                    except ValueError:
-                        print("Not an integer.")
-                auditSheet["D" + str(selectedRow)].value = change
-            # Changing room key amount.
-            elif choice == "r":
-                while True:
-                    try:
-                        change = int(input("How many room keys?\n"))
-                        break
-                    except ValueError:
-                        print("Not an integer.")
-                auditSheet["E" + str(selectedRow)].value = change
-            # Changing mail key amount.
-            elif choice == "m":
-                while True:
-                    try:
-                        change = int(input("How many mail keys?\n"))
-                        break
-                    except ValueError:
-                        print("Not an integer.")
-                auditSheet["F" + str(selectedRow)].value = change
-            # Changing fob amount.
-            elif choice == "f":
-                while True:
-                    try:
-                        change = int(input("How many fobs?\n"))
-                        break
-                    except ValueError:
-                        print("Not an integer.")
-                auditSheet["G" + str(selectedRow)].value = change
-            # Changing clear/discrepant.
-            elif choice == "c":
-                change = input("Clear or discrepant?\n")
-                if change == "c":
-                    auditSheet["H" + str(selectedRow)].value = "Clear"
-                else:
-                    auditSheet["H" + str(selectedRow)].value = "Discrepant"
-            # Changing comments.
-            else:
-                auditSheet["I" + str(selectedRow)].value = input("Input comment:\n")
+            choice_check(choice, selectedRow)
             choice = input("What field needs to be changed?\n")
     print()
 auditBook.save("VDSKeyAudit.xlsx")
@@ -115,52 +125,7 @@ for currentKey in range(1, 401):
     if verify != "":
         choice = input("What field needs to be changed?\n")
         while choice != "done":
-            # Changing sparky key amount.
-            if choice == "s":
-                while True:
-                    try:
-                        change = int(input("How many sparky keys?\n"))
-                        break
-                    except ValueError:
-                        print("Not an integer.")
-                auditSheet["D" + str(selectedRow)].value = change
-            # Changing room key amount.
-            elif choice == "r":
-                while True:
-                    try:
-                        change = int(input("How many room keys?\n"))
-                        break
-                    except ValueError:
-                        print("Not an integer.")
-                auditSheet["E" + str(selectedRow)].value = change
-            # Changing mail key amount.
-            elif choice == "m":
-                while True:
-                    try:
-                        change = int(input("How many mail keys?\n"))
-                        break
-                    except ValueError:
-                        print("Not an integer.")
-                auditSheet["F" + str(selectedRow)].value = change
-            # Changing fob amount.
-            elif choice == "f":
-                while True:
-                    try:
-                        change = int(input("How many fobs?\n"))
-                        break
-                    except ValueError:
-                        print("Not an integer.")
-                auditSheet["G" + str(selectedRow)].value = change
-            # Changing clear/discrepant.
-            elif choice == "c":
-                change = input("Clear or discrepant?\n")
-                if change == "c":
-                    auditSheet["H" + str(selectedRow)].value = "Clear"
-                else:
-                    auditSheet["H" + str(selectedRow)].value = "Discrepant"
-            # Changing comments.
-            else:
-                auditSheet["I" + str(selectedRow)].value = input("Input comment:\n")
+            choice_check(choice, currentKey + 1)
             choice = input("What field needs to be changed?\n")
     print()
 auditBook.save("VAVLKeyAudit.xlsx")
