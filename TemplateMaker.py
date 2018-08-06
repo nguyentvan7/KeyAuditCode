@@ -33,7 +33,7 @@ while currentRow <= 874:
             # Use this to reduce amount of data searching.
             prevCode = codeNum + 1
             break
-book.save("12-3Template.xlsx")
+book.save("Template0-3.xlsx")
 
 # 992 rooms in G-K.
 book = xl.Workbook()
@@ -58,7 +58,7 @@ while currentRow <= 992:
             # Use this to reduce amount of data searching.
             prevCode = codeNum + 1
             break
-book.save("3-6Template.xlsx")
+book.save("Template3-6.xlsx")
 
 # 400 rooms in L.
 # Can copy straight from SortedDecoded.xlsx.
@@ -73,7 +73,7 @@ sheet["C1"] = "# Sparky"
 sheet["D1"] = "# Room"
 sheet["E1"] = "# Mail"
 sheet["F1"] = "# Fob"
-for codeNum in range(1, 400):
+for codeNum in range(1, 401):
     room = str(codeSheet["B" + str(codeNum + 1)].value)
     sheet.append([codeNum, room])
-book.save("6-9Template.xlsx")
+book.save("Template6-9.xlsx")
