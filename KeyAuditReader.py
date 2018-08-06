@@ -4,10 +4,8 @@ import openpyxl as xl
 def building_check(ltr):
     if ltr == "B" or ltr == "C" or ltr == "H":
         return 159
-    elif ltr == "D" or ltr == "G":
+    elif ltr == "D" or ltr == "E" or ltr == "G":
         return 232
-    elif ltr == "E":
-        return 231
     elif ltr == "F":
         return 92
     elif ltr == "I":
