@@ -57,10 +57,10 @@ if (complexChoice == '1' or complexChoice == '3'):
 else:
 	print('\nUsing Villas Keycodes.')
 
-inputKey = (input(
-				'\nPlease begin entering keycodes.\n'
-				'Enter h for help. Enter x to exit.\n\n'))
-
+inputKey = input(
+	'\nPlease begin entering keycodes.\n'
+	'Enter h for help. Enter x to exit.\n\n')
+			
 # Continuously read for input.
 while inputKey != 'x' or complexChoice == 3:
 	# Print help menu.
@@ -76,8 +76,8 @@ while inputKey != 'x' or complexChoice == 3:
 			'm = mail\n'
 			'f = fob\n'
 			'u = urgent\n'
-			'lo = lock out\n'
-			'lc = lock change\n'
+			'o = lock out\n'
+			'c = lock change\n'
 			'none = full set\n')
 
 	# inputKey is only numbers, so a full set.
@@ -100,29 +100,42 @@ while inputKey != 'x' or complexChoice == 3:
 			fillSheet['E' + str(int(room[1:]) + 2)].value = 1
 			fillSheet['F' + str(int(room[1:]) + 2)].value = 1
 
-	# inputKey has comments attached.
+		# inputKey has comments attached.
 	elif inputKey != 'x':
-		room = room_find(int(inputKey[0:inputKey.index(' ') - 1]), complexChoice)
-		fillSheet = fillBook[str(room[0])]
-
-		comments = inputKey[inputKey.index(' ') + 1:]
-		# Iterate through comments.
-		for comment in comments:
-			if comment == 'r':
-				fillSheet['D' + str(int(room[1:]) + 2)].value = 1
-			elif comment == 'm':
-				fillSheet['E' + str(int(room[1:]) + 2)].value = 1
-			elif comment == 'f':
-				fillSheet['F' + str(int(room[1:]) + 2)].value = 1
-			elif comment == 'u':
-				fillSheet['C' + str(int(room[1:]) + 2)].value = 0
-				fillSheet['G' + str(int(room[1:]) + 2)].value = "Urgent"
-			elif comment == 'lo':
-				fillSheet['C' + str(int(room[1:]) + 2)].value = 0
-				fillSheet['G' + str(int(room[1:]) + 2)].value = "Lock out"
-			elif comment == 'lc':
-				fillSheet['C' + str(int(room[1:]) + 2)].value = 0
-				fillSheet['G' + str(int(room[1:]) + 2)].value = "Lock change"
+		try:
+			room = room_find(int(inputKey[0:inputKey.index(' ')]), complexChoice)
+			fillSheet = fillBook[str(room[0])]
+			comments = inputKey[inputKey.index(' ') + 1:]
+			# Iterate through comments.
+			for comment in comments:
+				if comment == 'r':
+					fillSheet['D' + str(int(room[1:]) + 2)].value = 1
+				elif comment == 'm':
+					fillSheet['E' + str(int(room[1:]) + 2)].value = 1
+				elif comment == 'f':
+					fillSheet['F' + str(int(room[1:]) + 2)].value = 1
+				elif comment == 'u':
+					fillSheet['C' + str(int(room[1:]) + 2)].value = 0
+					fillSheet['G' + str(int(room[1:]) + 2)].value = "Urgent"
+				elif comment == 'o':
+					fillSheet['C' + str(int(room[1:]) + 2)].value = 0
+					fillSheet['G' + str(int(room[1:]) + 2)].value = "Lock out"
+				elif comment == 'c':
+					fillSheet['C' + str(int(room[1:]) + 2)].value = 0
+					fillSheet['G' + str(int(room[1:]) + 2)].value = "Lock change"
+				elif comment.isspace():
+					if fillSheet['G' + str(int(room[1:]) + 2)].value == 'Studio':
+						# Fill in full set for studio.
+						fillSheet['E' + str(int(room[1:]) + 2)].value = 1
+						fillSheet['F' + str(int(room[1:]) + 2)].value = 1
+					else:
+						# Fill in full set for regular room.
+						fillSheet['D' + str(int(room[1:]) + 2)].value = 1
+						fillSheet['E' + str(int(room[1:]) + 2)].value = 1
+						fillSheet['F' + str(int(room[1:]) + 2)].value = 1
+						
+		except ValueError:
+			print('Please enter a valid keycode/comment.\n\n')
 	
 	# Switch from Vista to Villas for doing all keys.
 	if complexChoice == '3' and inputKey == 'x':
