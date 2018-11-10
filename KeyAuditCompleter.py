@@ -69,7 +69,7 @@ while inputKey != 'x' or complexChoice == 3:
 			'\nFormat of keycodes:\n'
 			'INPUT = KEYCODE. .COMMENT\n'
 			'KEYCODE = NUM.NUM.NUM | NUM.NUM.NUM.NUM\n'
-			'COMMENT = r | m | f | u | lo | lc | COMMENT.COMMENT | EPSILON\n'
+			'COMMENT = r | m | f | u | o | c | n | COMMENT.COMMENT | EPSILON\n'
 			'\n'
 			'Comment definitions:\n'
 			'r = room\n'
@@ -78,6 +78,8 @@ while inputKey != 'x' or complexChoice == 3:
 			'u = urgent\n'
 			'o = lock out\n'
 			'c = lock change\n'
+			'n = reset normal keys\n'
+			's = reset studio keys\n'
 			'none = full set\n')
 
 	# inputKey is only numbers, so a full set.
@@ -108,21 +110,42 @@ while inputKey != 'x' or complexChoice == 3:
 			comments = inputKey[inputKey.index(' ') + 1:]
 			# Iterate through comments.
 			for comment in comments:
+				# Set room key.
 				if comment == 'r':
 					fillSheet['D' + str(int(room[1:]) + 2)].value = 1
+				# Set mail key.
 				elif comment == 'm':
 					fillSheet['E' + str(int(room[1:]) + 2)].value = 1
+				# Set fob.
 				elif comment == 'f':
 					fillSheet['F' + str(int(room[1:]) + 2)].value = 1
+				# Set urgent.
 				elif comment == 'u':
 					fillSheet['C' + str(int(room[1:]) + 2)].value = 0
 					fillSheet['G' + str(int(room[1:]) + 2)].value = "Urgent"
+				# Set lock out.
 				elif comment == 'o':
 					fillSheet['C' + str(int(room[1:]) + 2)].value = 0
 					fillSheet['G' + str(int(room[1:]) + 2)].value = "Lock out"
+				# Set lock change.
 				elif comment == 'c':
 					fillSheet['C' + str(int(room[1:]) + 2)].value = 0
 					fillSheet['G' + str(int(room[1:]) + 2)].value = "Lock change"
+				# Set normal keys.
+				elif comment == 'n':
+					fillSheet['C' + str(int(room[1:]) + 2)].value = 1
+					fillSheet['D' + str(int(room[1:]) + 2)].value = 0
+					fillSheet['E' + str(int(room[1:]) + 2)].value = 0
+					fillSheet['F' + str(int(room[1:]) + 2)].value = 0
+					fillSheet['G' + str(int(room[1:]) + 2)].value = ""
+				# Set studio keys.
+				elif comment == 's':
+					fillSheet['C' + str(int(room[1:]) + 2)].value = 0
+					fillSheet['D' + str(int(room[1:]) + 2)].value = 0
+					fillSheet['E' + str(int(room[1:]) + 2)].value = 0
+					fillSheet['F' + str(int(room[1:]) + 2)].value = 0
+					fillSheet['G' + str(int(room[1:]) + 2)].value = "Studio"
+				# Set full set for accidental whitespace.
 				elif comment.isspace():
 					if fillSheet['G' + str(int(room[1:]) + 2)].value == 'Studio':
 						# Fill in full set for studio.
@@ -144,4 +167,4 @@ while inputKey != 'x' or complexChoice == 3:
 
 	inputKey = input()
 
-fillBook.save("../[" + datetime.datetime.today().strftime('%y%m%d') + "]KeyAudit.xlsx")
+fillBook.save("../Completed/" + datetime.datetime.today().strftime('%y%m%d') + "KeyAudit.xlsx")
