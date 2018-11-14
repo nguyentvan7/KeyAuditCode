@@ -28,17 +28,17 @@ def room_find(keycode, cChoice):
 		return 'L' + str(lCodes.index(keycode))
 
 # Keycodes of each building.
-bCodes = list(range(1549, 1707))
-cCodes = list(range(1708, 1866))
-dCodes = list(range(1158, 1389))
-eCodes = list(range(804, 808)) + list(range(926, 1127)) + list(range(1133, 1157))
-fCodes = list(range(834, 925))
-gCodes = list(range(602, 803)) + list(range(809, 833)) + list(range(1128, 1132))
-hCodes = list(range(1390, 1548))
-iCodes = list(range(363, 601))
-jCodes = list(range(1, 4)) + list(range(150, 173)) + list(range(176, 183)) + list(range(186, 362))
-kCodes = list(range(5, 149)) + [174, 175, 184, 185]
-lCodes = list(range(1, 400))
+bCodes = list(range(1549, 1708))
+cCodes = list(range(1708, 1867))
+dCodes = list(range(1158, 1390))
+eCodes = list(range(804, 809)) + list(range(926, 1128)) + list(range(1133, 1158))
+fCodes = list(range(834, 926))
+gCodes = list(range(602, 804)) + list(range(809, 834)) + list(range(1128, 1133))
+hCodes = list(range(1390, 1549))
+iCodes = list(range(363, 602))
+jCodes = list(range(1, 5)) + list(range(150, 174)) + list(range(176, 184)) + list(range(186, 363))
+kCodes = list(range(5, 150)) + [174, 175, 184, 185]
+lCodes = list(range(1, 401))
 		
 # Load audit book.
 fillBook = xl.load_workbook(filename = '../Fill.xlsx')
@@ -88,19 +88,22 @@ while inputKey != 'x' or complexChoice == 3:
 		# room[0] -> building letter.
 		# int(room[1:]) -> row number in fillSheet for room.
 		# Must add 2 to int(room[1:]) to compensate for 0-indexing and header in Excel.
-		room = room_find(int(inputKey), complexChoice)
-		fillSheet = fillBook[room[0]]
+		try:
+			room = room_find(int(inputKey), complexChoice)
+			fillSheet = fillBook[room[0]]
 
-		# Determine if room is a studio.
-		if fillSheet['G' + str(int(room[1:]) + 2)].value == 'Studio':
-			# Fill in full set for studio.
-			fillSheet['E' + str(int(room[1:]) + 2)].value = 1
-			fillSheet['F' + str(int(room[1:]) + 2)].value = 1
-		else:
-			# Fill in full set for regular room.
-			fillSheet['D' + str(int(room[1:]) + 2)].value = 1
-			fillSheet['E' + str(int(room[1:]) + 2)].value = 1
-			fillSheet['F' + str(int(room[1:]) + 2)].value = 1
+			# Determine if room is a studio.
+			if fillSheet['G' + str(int(room[1:]) + 2)].value == 'Studio':
+				# Fill in full set for studio.
+				fillSheet['E' + str(int(room[1:]) + 2)].value = 1
+				fillSheet['F' + str(int(room[1:]) + 2)].value = 1
+			else:
+				# Fill in full set for regular room.
+				fillSheet['D' + str(int(room[1:]) + 2)].value = 1
+				fillSheet['E' + str(int(room[1:]) + 2)].value = 1
+				fillSheet['F' + str(int(room[1:]) + 2)].value = 1
+		except TypeError:
+			print('Please enter a valid keycode/comment.\n')
 
 		# inputKey has comments attached.
 	elif inputKey != 'x':
@@ -156,9 +159,14 @@ while inputKey != 'x' or complexChoice == 3:
 						fillSheet['D' + str(int(room[1:]) + 2)].value = 1
 						fillSheet['E' + str(int(room[1:]) + 2)].value = 1
 						fillSheet['F' + str(int(room[1:]) + 2)].value = 1
-						
+				else:
+					print(
+						'One or more of your comments was not recognized.\n'
+						'Please reset this room and re-enter your comments.\n')
 		except ValueError:
-			print('Please enter a valid keycode/comment.\n\n')
+			print('Please enter a valid keycode/comment.\n')
+		except TypeError:
+			print('Please enter a valid keycode/comment.\n')
 	
 	# Switch from Vista to Villas for doing all keys.
 	if complexChoice == '3' and inputKey == 'x':
