@@ -60,9 +60,18 @@ else:
 inputKey = input(
 	'\nPlease begin entering keycodes.\n'
 	'Enter h for help. Enter x to exit.\n\n')
+# Switch from Vista to Villas for doing all keys.
+if complexChoice == '3' and inputKey == 'x':
+	complexChoice = '2'
+	print("\nSwitching to Villas keycodes.\n")
+	inputKey = input(
+		'\nPlease begin entering keycodes.\n'
+		'Enter h for help. Enter x to exit.\n\n')
 			
 # Continuously read for input.
-while inputKey != 'x' or complexChoice == 3:
+while inputKey != 'x':
+	print(inputKey)
+	print(complexChoice)
 	# Print help menu.
 	if inputKey == 'h':
 		print(
@@ -168,11 +177,14 @@ while inputKey != 'x' or complexChoice == 3:
 		except TypeError:
 			print('Please enter a valid keycode/comment.\n')
 	
+	inputKey = input()
 	# Switch from Vista to Villas for doing all keys.
 	if complexChoice == '3' and inputKey == 'x':
 		complexChoice = '2'
-		print("\n Switching to Villas keycodes.\n\n")
+		print("\nSwitching to Villas keycodes.\n")
+		inputKey = input(
+			'\nPlease begin entering keycodes.\n'
+			'Enter h for help. Enter x to exit.\n\n')
 
-	inputKey = input()
 
 fillBook.save("../Completed/" + datetime.datetime.today().strftime('%y%m%d') + "KeyAudit.xlsx")
