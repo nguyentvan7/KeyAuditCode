@@ -70,8 +70,6 @@ if complexChoice == '3' and inputKey == 'x':
 			
 # Continuously read for input.
 while inputKey != 'x':
-	print(inputKey)
-	print(complexChoice)
 	# Print help menu.
 	if inputKey == 'h':
 		print(
